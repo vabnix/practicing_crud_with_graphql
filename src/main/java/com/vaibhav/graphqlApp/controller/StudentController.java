@@ -1,6 +1,8 @@
 package com.vaibhav.graphqlApp.controller;
 
+import com.vaibhav.graphqlApp.dto.GraphQLPageRequest;
 import com.vaibhav.graphqlApp.dto.Student;
+import com.vaibhav.graphqlApp.dto.StudentPage;
 import com.vaibhav.graphqlApp.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
@@ -26,14 +28,19 @@ public class StudentController {
         return studentService.updateStudent(student);
     }
 
-    @QueryMapping
-    public List<Student> students() {
+    @QueryMapping("allStudents")
+    public List<Student> getAllStudents() {
         return studentService.getStudents();
     }
 
     @QueryMapping
     public Student studentById(@Argument Integer id) {
         return studentService.getStudentById(id);
+    }
+
+    @QueryMapping("paginatedStudents")
+    public StudentPage getPaginatedStudents(@Argument GraphQLPageRequest pageRequest) {
+        return studentService.studentPage(pageRequest);
     }
 
 

@@ -16,8 +16,27 @@ input StudentInput {
     rollNumber: Int!
 }
 
+type PageInfo {
+    hasNextPage: Boolean!
+    hasPreviousPage: Boolean!
+    totalElements: Int!
+    totalPages: Int!
+}
+
+type StudentPage {
+    content: [Student!]!
+    pageInfo: PageInfo!
+}
+
+input GraphQLPageRequest {
+    page: Int = 0
+    size: Int = 10
+    sort: [String!] = []
+}
+
 type Query {
-    students: [Student]
+    allStudents: [Student]
+    paginatedStudents(pageRequest: GraphQLPageRequest): StudentPage!
     studentById(id: ID!): Student
 }
 
